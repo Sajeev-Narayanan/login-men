@@ -7,6 +7,9 @@ const cookieparser = require('cookie-parser');
 
 const app = express();
 
+
+let meg=""
+
 app.use(express.static('public'))
 app.set("views",(path.join(__dirname,'/views')))
 
@@ -54,7 +57,7 @@ app.get("/login", (req, res) => {
   if (req.session.user) {
     res.redirect("/");
   } else {
-  res.render("pages/login",{message:""});
+  res.render("pages/login",{message:meg});
   }
 });
 
@@ -67,10 +70,11 @@ app.post("/login", (req, res) => {
       maxAge:2*60*60*1000,
       httpOnly:true,});
     console.log(req.cookies.username)
-    req.session.name = user.name;
+    // req.session.name = user.name;
     res.redirect("/");
   }else{
-    res.render("pages/login",{message:"Enter valide user name or password"});
+    meg="Enter valide user name or password"
+    res.redirect("/login");
   }
 });
 
